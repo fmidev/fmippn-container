@@ -25,15 +25,11 @@ WORKDIR .
 RUN mkdir input output log
 
 # Clone fmippn-oper from Github
-#RUN git clone https://github.com/fmidev/fmippn-oper.git && cd fmippn-oper && git checkout -b fix-undetect
-RUN git clone --single-branch --branch fix-undetect https://github.com/fmidev/fmippn-oper.git
+RUN git clone --single-branch --branch pysteps14 https://github.com/fmidev/fmippn-oper.git
 
 # Create conda environment
 COPY environment_pysteps14.yml fmippn-oper/environment.yml
 RUN conda env create -f fmippn-oper/environment.yml -n fmippn
-
-#Cat ppn.py to see that it's the right one
-RUN cat fmippn-oper/fmippn/ppn.py
 
 # Disable dask
 RUN export OMP_NUM_THREADS=1

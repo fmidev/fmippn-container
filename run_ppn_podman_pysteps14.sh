@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOMAIN=${DOMAIN:-'europe'}
+DOMAIN=${DOMAIN:-'ravake_hdf5'}
 NODE=${NODE:-'fmippn-1'}
 
 #List latest file in domain folder
@@ -11,7 +11,7 @@ TIMESTAMP=${TIMESTAMP:-${LATEST_TIMESTAMP}}
 echo "Calculating PPN nowcast for domain "$DOMAIN", timestamp "$TIMESTAMP
 
 # Build from Dockerfile
-#podman build --tag fmippn_bugfix_pysteps14 -f Dockerfile_bugfix_and_pysteps14
+#podman build --tag fmippn_pysteps14 -f Dockerfile_pysteps14
 
 # Get configs pystepsrc and config.json from Github
 #wget https://raw.githubusercontent.com/fmidev/fmippn-oper/master/fmippn/config/$DOMAIN.json
@@ -24,9 +24,8 @@ podman run \
        --env "timestamp=$TIMESTAMP" \
        --env "domain=$DOMAIN" \
        --mount type=bind,source=/data/input/$DOMAIN,target=/input \
-       --mount type=bind,source=/data/output/${DOMAIN}_bugfix/$NODE,target=/output \
+       --mount type=bind,source=/data/output/${DOMAIN}_pysteps14/$NODE,target=/output \
        --mount type=bind,source=/data/log/$NODE,target=/log \
-       --mount type=bind,source="$(pwd)"/pystepsrc,target=/fmippn-oper/fmippn/pystepsrc \
-       --mount type=bind,source="$(pwd)"/$DOMAIN.json,target=/fmippn-oper/fmippn/config/$DOMAIN.json \
+       --mount type=bind,source="$(pwd)"/${DOMAIN}_container.json,target=/fmippn-oper/fmippn/config/$DOMAIN.json \
        --security-opt label=disable \
-       fmippn_bugfix_pysteps14:latest
+       fmippn_pysteps14:latest
