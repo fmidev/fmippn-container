@@ -1,7 +1,10 @@
 #!/bin/bash
 
 DOMAIN=${DOMAIN:-'ravake_hdf5'}
-NODE=${NODE:-'fmippn-1'}
+
+#Read short hostname from server to use as output folder names.
+HOSTNAME=`hostname -s`
+NODE=${NODE:-${HOSTNAME}}
 
 #List latest file in domain folder
 LATEST_TIMESTAMP=`ls -t /data/input/$DOMAIN/ | head -n1 | awk -F "_" '{print $1}'`
@@ -12,11 +15,6 @@ echo "Calculating PPN nowcast for domain "$DOMAIN", timestamp "$TIMESTAMP
 
 # Build from Dockerfile
 #podman build --tag fmippn_pysteps14 -f Dockerfile_pysteps14
-
-# Get configs pystepsrc and config.json from Github
-#wget https://raw.githubusercontent.com/fmidev/fmippn-oper/master/fmippn/config/$DOMAIN.json
-#wget https://raw.githubusercontent.com/fmidev/fmippn-oper/master/fmippn/pystepsrc
-#wget https://raw.githubusercontent.com/fmidev/fmippn-oper/master/environment.yml
 
 # Run with volume mounts
 podman run \
