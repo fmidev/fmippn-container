@@ -21,9 +21,9 @@
     "as_quantity": "DBZH",
     "scaler": 10,
     "scale_zero": -32,
-    "store_ensemble": false,
+    "store_ensemble": true,
     "store_deterministic": true,
-    "store_motion": false,
+    "store_motion": true,
     "store_perturbed_motion": false,
     "use_old_format": false,
     "path": "/output"
@@ -46,7 +46,7 @@
     "kmperpixel": 2.0,
     "timestep": 5,
     "fft_method": "pyfftw",
-    "n_ens_members": 5,
+    "n_ens_members": 4,
     "n_cascade_levels": 8,
     "num_workers": 10,
     "domain": "spectral",
@@ -63,7 +63,7 @@
         0
       ]
     },
-    "seed": 20190821
+    "seed": null
   },
   "logging": {
     "write_log": true,
